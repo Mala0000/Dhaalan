@@ -33,16 +33,10 @@ export default function App() {
 
 const SubjectCard = ({ title, link, image }) => (
   <div className="">
-    <div className="h-44 w-44 rounded-2xl border border-red-500 overflow-hidden p-2 flex flex-col justify-end">
-      <h1 className="text-4xl font-bold font-outline-2 text-yellow-50 ">
-        {title}
-      </h1>
-    </div>
-    <div className="py-2">
-      <p className="text-red-500 font-semibold">{title}</p>
-      <Link className="font-medium text-sm" to={link}>
-        Read More{" "}
-      </Link>
-    </div>
+    <Link className="font-medium text-sm" to={link}>
+      <div className="h-44 w-44 sm:h-60 sm:w-60 rounded-2xl bg-gradient-to-t from-red-500 via-red-400 to-red-300 overflow-hidden p-3 flex flex-col justify-end">
+        <h1 className="text-2xl font-bold  text-white leading-6">{title}</h1>
+      </div>
+    </Link>
   </div>
 );
