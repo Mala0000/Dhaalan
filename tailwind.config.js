@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        dhivehi: ["Mv Eamaan XP"],
+        dhivehi: "Mv Eamaan XP",
       },
     },
   },
