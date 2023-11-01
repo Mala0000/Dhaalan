@@ -4,23 +4,30 @@ import RootLayout from "./layouts/root";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { isLatin } from "./routes/subjects";
+import { isLatin } from "./utils/isLatin";
+// import { isLatin } from "./utils/isLatin";
 import { cn } from "./utils/cn";
 
 export default function App() {
+  // const subjects = useQuery(["subjects"], async () => {
+  //   return await axios.get(`/Subjects`);
+  // });
+
   const subjects = useQuery(["subjects"], async () => {
-    return await axios.get(`/Subjects`);
+    return await axios.get("/Subjects");
   });
 
   if (subjects.isLoading) {
     return <p>Loading....</p>;
   }
+
   return (
     <>
       <RootLayout>
         <div>
           <h1 className="font-bold text-5xl text-red-500">Subjects</h1>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-5  py-5">
+            {/*  */}
             {subjects?.data?.data?.records?.map((subject) => (
               <SubjectCard
                 title={subject?.fields?.Subject}
@@ -28,6 +35,7 @@ export default function App() {
               />
             ))}
           </div>
+          {/* <pre>{JSON.stringify(subjects, null, 2)}</pre> */}
         </div>
       </RootLayout>
     </>
