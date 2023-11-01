@@ -19,6 +19,7 @@ export default function App() {
     <>
       <RootLayout>
         <div>
+          hello
           <h1 className="font-bold text-5xl text-red-500">Subjects</h1>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-5  py-5">
             {subjects?.data?.data?.records?.map((subject) => (
