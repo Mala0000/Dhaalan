@@ -109,7 +109,9 @@ export default function PerSubjectPage() {
                                 className="grid grid-cols-1 sm:grid-cols-4 gap-5 mt-2"
                                 key={variant}
                               >
-                                <h4>Variant: {variant}</h4>
+                                <h4 className="font-semibold text-xl">
+                                  Variant: {variant}
+                                </h4>
                                 {grouped[year][session][variant].map((item) => (
                                   <div
                                     key={item?.id}
@@ -123,9 +125,13 @@ export default function PerSubjectPage() {
                                           </p>
                                           <p>{item?.fields?.Variant}</p>
                                         </div>
-                                        <Link to={item?.fields?.URL}>
+                                        <a
+                                          href={item?.fields?.URL}
+                                          download
+                                          // to={item?.fields?.URL}s
+                                        >
                                           <ArrowDownToLine />
-                                        </Link>
+                                        </a>
                                       </div>
                                     )}
                                   </div>

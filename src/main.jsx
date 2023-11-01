@@ -11,7 +11,8 @@ import axios from "axios";
 import App from "./App";
 import SubjectsIndex from "./routes/subjects";
 import PerSubjectPage from "./routes/subjects/id";
-import { token } from "./utils/airtable";
+import Forum from "./routes/forum";
+import Post from "./routes/forum/post";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,19 @@ const router = createBrowserRouter([
       {
         path: ":subjectId",
         element: <PerSubjectPage />,
+      },
+    ],
+  },
+  {
+    path: "/forum",
+    children: [
+      {
+        path: "",
+        element: <Forum />,
+      },
+      {
+        path: ":postId",
+        element: <Post />,
       },
     ],
   },

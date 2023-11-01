@@ -34,7 +34,7 @@ export default function SubjectsIndex() {
               />
             ))}
           </div>
-          <pre>{JSON.stringify(subjects, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(subjects, null, 2)}</pre> */}
         </div>
       </RootLayout>
     </>
