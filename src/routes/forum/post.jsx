@@ -12,12 +12,12 @@ import axios from "axios";
 export default function Post() {
   const params = useParams();
 
-  const form = useForm({
-    defaultValues: {
-      comment: "",
-      postId: params?.postId ?? "",
-    },
-  });
+  // const form = useForm({
+  //   defaultValues: {
+  //     comment: "",
+  //     postId: params?.postId ?? "",
+  //   },
+  // });
 
   const post = useQuery(["post", params.postId], async () => {
     return await axios.get(`/Posts/${params.postId}`);
@@ -85,7 +85,7 @@ export default function Post() {
           </div>
         </div>
       </div>
-      <pre>{JSON.stringify(form.watch(), null, 2)}</pre>
+      {/* <pre>{JSON.stringify(form.watch(), null, 2)}</pre> */}
       <pre>{JSON.stringify(filteredComments, null, 2)}</pre>
       <pre>{JSON.stringify(params, null, 2)}</pre>
       <pre>{JSON.stringify(postData, null, 2)}</pre>
