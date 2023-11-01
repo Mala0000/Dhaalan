@@ -3,6 +3,9 @@ import RootLayout from "../../layouts/root";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
+import { cn } from "../../utils/cn";
+import { isLatin } from ".";
+
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDownToLine } from "lucide-react";
 
@@ -19,11 +22,15 @@ export default function PerSubjectPage() {
 
   const currentSubject = subjectsData[0];
 
-  const res = useQuery(["resources"], async () => {
+  const res = useQuery(["resources", currentSubject], async () => {
     return await axios.get("/Resources");
   });
 
-  let grouped = res?.data?.data?.records?.reduce((result, item) => {
+  let filteredArray = res?.data?.data?.records?.filter((item) =>
+    item.fields.Subject.includes(currentSubject?.id)
+  );
+
+  let grouped = filteredArray?.reduce((result, item) => {
     let year = item.fields.Year;
     let session = item.fields.Session;
     let variant = item.fields.InternationalVariant;
@@ -53,67 +60,93 @@ export default function PerSubjectPage() {
     return <p>Loading....</p>;
   }
 
+  const isDhivehi = !isLatin(currentSubject?.fields?.Subject);
+
   return (
     <>
       <RootLayout>
         <div>
-          <h1 className="font-bold text-4xl text-red-600">
-            {currentSubject.fields.Subject}
+          <h1
+            className={cn(
+              "font-bold text-4xl text-red-600",
+              isDhivehi && "font-dhivehi text-right font-normal"
+            )}
+          >
+            {currentSubject.fields?.Subject}
           </h1>
           <p className="text-gray-500 text-sm">
-            Number of Resources: {currentSubject.fields.Resources.length}
+            Number of Resources: {currentSubject.fields?.Resources?.length ?? 0}
           </p>
           <div className="py-10">
             <div>
-              {Object.keys(grouped).map((year) => (
-                <div key={year}>
-                  <h2 className="font-semibold text-2xl text-red-600  pb-2">
-                    {year}
-                  </h2>
-                  {Object.keys(grouped[year]).map((session) => (
-                    <div key={session} className="border-t  border-red-600">
-                      <h3 className="py-2  font-semibold text-xl text-red-600">
-                        Session: {session}
-                      </h3>
-                      {Object.keys(grouped[year][session]).map((variant) => (
-                        <div
-                          className="grid grid-cols-1 sm:grid-cols-4 gap-5 mt-2"
-                          key={variant}
-                        >
-                          <h4>Variant: {variant}</h4>
-                          {grouped[year][session][variant].map((item) => (
-                            <div
-                              key={item.id}
-                              className="border-y border-y-red-500 py-2"
-                            >
-                              {/* Render your item here */}
-                              <div className="flex flex-row justify-between items-center">
-                                <div>
-                                  <p className="bg-red-50 rounded-full px-2 w-fit text-sm">
-                                    {item.fields.Type}
-                                  </p>
-                                  <p>{item.fields.Variant}</p>
-                                </div>
-                                <Link to={item.fields.URL}>
-                                  <ArrowDownToLine />
-                                </Link>
+              {Object.keys(grouped).length === 0 ? (
+                <div className="border border-gray-300 rounded-lg p-5 flex flex-col items-center gap-y-4 justify-center">
+                  <img src="/kite.svg" className="h-60 w-auto" />
+                  <div className="flex flex-col items-center">
+                    <h3 className="text-2xl font-semibold text-red-500">
+                      Empty!
+                    </h3>
+                    <p>
+                      No resources found under {currentSubject.fields?.Subject}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  {Object.keys(grouped).map((year) => (
+                    <div key={year}>
+                      <h2 className="font-semibold text-2xl text-red-600  pb-2">
+                        {year}
+                      </h2>
+                      {Object.keys(grouped[year]).map((session) => (
+                        <div key={session} className="border-t  border-red-600">
+                          <h3 className="py-2  font-semibold text-xl text-red-600">
+                            Session: {session}
+                          </h3>
+                          {Object.keys(grouped[year][session]).map(
+                            (variant) => (
+                              <div
+                                className="grid grid-cols-1 sm:grid-cols-4 gap-5 mt-2"
+                                key={variant}
+                              >
+                                <h4>Variant: {variant}</h4>
+                                {grouped[year][session][variant].map((item) => (
+                                  <div
+                                    key={item?.id}
+                                    className="border-y border-y-red-500 py-2"
+                                  >
+                                    {item && item.fields && (
+                                      <div className="flex flex-row justify-between items-center">
+                                        <div>
+                                          <p className="bg-red-50 rounded-full px-2 w-fit text-sm">
+                                            {item?.fields?.Type}
+                                          </p>
+                                          <p>{item?.fields?.Variant}</p>
+                                        </div>
+                                        <Link to={item?.fields?.URL}>
+                                          <ArrowDownToLine />
+                                        </Link>
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
                               </div>
-                              {/* Add more fields as needed */}
-                            </div>
-                          ))}
+                            )
+                          )}
                         </div>
                       ))}
                     </div>
                   ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
-          {/* <pre>{JSON.stringify(grouped, null, 2)}</pre>
+          {/* {res?.data?.data?.records?.length}
+          <pre>{JSON.stringify(filteredArray, null, 2)}</pre>
+          <pre>{JSON.stringify(grouped, null, 2)}</pre>
           <pre>{JSON.stringify(currentSubject, null, 2)}</pre>
           <pre>{JSON.stringify(subjects, null, 2)}</pre>
-          <pre>{JSON.stringify(res?.data, null, 2)}</pre>
-          {res?.data?.data?.records?.length} */}
+          <pre>{JSON.stringify(res?.data, null, 2)}</pre> */}
         </div>
       </RootLayout>
     </>

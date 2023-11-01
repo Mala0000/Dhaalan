@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Mv Eamaan XP";
+  src: url("/fonts/MvEamaanXP.woff2") format("woff2"),
+    url("/fonts/MvEamaanXP.woff") format("woff");
+  font-weight: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

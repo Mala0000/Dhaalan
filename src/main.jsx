@@ -6,6 +6,8 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
 
+// import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
 import App from "./App";
 import SubjectsIndex from "./routes/subjects";
 import PerSubjectPage from "./routes/subjects/id";
@@ -18,7 +20,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/subjects",
-
     children: [
       { path: "", element: <SubjectsIndex /> },
       {
@@ -31,7 +32,8 @@ const router = createBrowserRouter([
 
 axios.defaults.baseURL = "https://api.airtable.com/v0/applRp9KQkpA7OkEU";
 
-axios.defaults.headers.common["Authorization"] = token;
+axios.defaults.headers.common["Authorization"] =
+  import.meta.env.VITE_AIRTABLE_TOKEN;
 
 const queryClient = new QueryClient();
 
