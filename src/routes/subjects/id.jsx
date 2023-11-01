@@ -101,6 +101,9 @@ export default function PerSubjectPage() {
                 </div>
               ) : (
                 <div>
+                  <h2 className="font-semibold text-2xl text-red-600  pb-2">
+                    Past Papers
+                  </h2>
                   {Object.keys(grouped).map((year) => (
                     <div key={year}>
                       <h2 className="font-semibold text-2xl text-red-600  pb-2">
