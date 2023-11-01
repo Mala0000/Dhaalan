@@ -4,7 +4,7 @@ import RootLayout from "../../layouts/root";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-import { HelpCircle, Speech } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Forum() {

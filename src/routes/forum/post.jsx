@@ -3,11 +3,11 @@ import RootLayout from "../../layouts/root";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useForm, Controller } from "react-hook-form";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
+// import { useForm, Controller } from "react-hook-form";
+// import { Editor } from "react-draft-wysiwyg";
+// import { EditorState } from "draft-js";
 
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function Post() {
   const params = useParams();
