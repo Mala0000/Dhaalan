@@ -187,14 +187,14 @@ export default function PerSubjectPage() {
               )}
             </div>
           </div>
-          <pre>{JSON.stringify(filteredOtherResources, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(filteredOtherResources, null, 2)}</pre>
           <pre>{JSON.stringify(grouped, null, 2)}</pre>
           <pre>{JSON.stringify(currentSubject, null, 2)}</pre>
           {res?.data?.data?.records?.length}
           <pre>{JSON.stringify(filteredArray, null, 2)}</pre>
           <pre>{JSON.stringify(grouped, null, 2)}</pre>
           <pre>{JSON.stringify(subjects, null, 2)}</pre>
-          <pre>{JSON.stringify(res?.data, null, 2)}</pre>
+          <pre>{JSON.stringify(res?.data, null, 2)}</pre> */}
         </div>
       </RootLayout>
     </>
