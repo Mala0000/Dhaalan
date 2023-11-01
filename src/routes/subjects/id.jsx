@@ -7,7 +7,7 @@ import { cn } from "../../utils/cn";
 import { isLatin } from ".";
 
 import { useQuery } from "@tanstack/react-query";
-import { ArrowDownToLine } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight } from "lucide-react";
 
 export default function PerSubjectPage() {
   const params = useParams();
@@ -28,6 +28,14 @@ export default function PerSubjectPage() {
 
   let filteredArray = res?.data?.data?.records?.filter((item) =>
     item.fields.Subject.includes(currentSubject?.id)
+  );
+
+  const otherResources = useQuery(["otherResources"], async () => {
+    return await axios.get("/OtherResources");
+  });
+
+  let filteredOtherResources = otherResources?.data?.data?.records?.filter(
+    (item) => item.fields.Subject.includes(currentSubject?.id)
   );
 
   let grouped = filteredArray?.reduce((result, item) => {
@@ -56,7 +64,7 @@ export default function PerSubjectPage() {
     return result;
   }, {});
 
-  if (res.isLoading || subjects.isLoading) {
+  if (res.isLoading || subjects.isLoading || otherResources.isLoading) {
     return <p>Loading....</p>;
   }
 
@@ -143,16 +151,47 @@ export default function PerSubjectPage() {
                       ))}
                     </div>
                   ))}
+                  <div>
+                    <h2 className="font-semibold text-2xl text-red-600  pb-2">
+                      Other Resources
+                    </h2>
+                    <div className="grid sm:grid-cols-4 gap-5">
+                      {filteredOtherResources.map((item) => {
+                        return (
+                          <div
+                            key={item.id}
+                            className="flex flex-row justify-between items-center border-y border-y-red-500 py-2"
+                          >
+                            <div>
+                              <p className="bg-red-50 rounded-full px-2 w-fit text-sm mb-2">
+                                {item?.fields?.Category}
+                              </p>
+                              <p>{item?.fields?.Title}</p>
+                            </div>
+                            <a
+                              href={item?.fields?.URL}
+                              target="_blank"
+                              // to={item?.fields?.URL}s
+                            >
+                              <ArrowUpRight />
+                            </a>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
           </div>
-          {/* {res?.data?.data?.records?.length}
-          <pre>{JSON.stringify(filteredArray, null, 2)}</pre>
+          <pre>{JSON.stringify(filteredOtherResources, null, 2)}</pre>
           <pre>{JSON.stringify(grouped, null, 2)}</pre>
           <pre>{JSON.stringify(currentSubject, null, 2)}</pre>
+          {res?.data?.data?.records?.length}
+          <pre>{JSON.stringify(filteredArray, null, 2)}</pre>
+          <pre>{JSON.stringify(grouped, null, 2)}</pre>
           <pre>{JSON.stringify(subjects, null, 2)}</pre>
-          <pre>{JSON.stringify(res?.data, null, 2)}</pre> */}
+          <pre>{JSON.stringify(res?.data, null, 2)}</pre>
         </div>
       </RootLayout>
     </>
